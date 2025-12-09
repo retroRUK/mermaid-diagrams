@@ -66,7 +66,7 @@ jobs:
           rpmbuild -ba ~/rpmbuild/SPECS/memdia.spec
 
       - name: Upload RPM artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: memdia-rpm
           path: |
