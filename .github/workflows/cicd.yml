@@ -5,6 +5,9 @@ on:
     branches: ["main"]
   workflow_dispatch:
 
+permissions:
+  contents: write
+
 jobs:
   build-rpm:
     runs-on: ubuntu-latest
@@ -35,8 +38,7 @@ jobs:
           CGO_ENABLED=1 go build -buildvcs=false -o build/memdia ./src
 
       - name: Copy binary to SOURCES
-        run: |
-          cp build/memdia ~/rpmbuild/SOURCES/
+        run: cp build/memdia ~/rpmbuild/SOURCES/
 
       - name: Add SPEC file
         run: |
@@ -70,25 +72,10 @@ jobs:
           EOF
 
       - name: Build RPM
-        run: |
-          rpmbuild -ba ~/rpmbuild/SPECS/memdia.spec
+        run: rpmbuild -ba ~/rpmbuild/SPECS/memdia.spec
 
       - name: Upload RPM artifact
         uses: actions/upload-artifact@v4
-        with:
-          name: memdia-rpm
-          path: |
-            ~/rpmbuild/RPMS/x86_64/*.rpm
-
-            jobs:
-  build-rpm:
-    runs-on: ubuntu-latest
-    container:
-      image: rockylinux:9
-
-    steps:
-      - name: Upload RPM artifact
-        uses: actions/upload-artifact@v3
         with:
           name: memdia-rpm
           path: ~/rpmbuild/RPMS/x86_64/*.rpm
@@ -110,4 +97,3 @@ jobs:
           files: dist/*.rpm
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
