@@ -1,0 +1,73 @@
+name: CICD
+
+on:
+  push:
+    branches: ["main"]
+  workflow_dispatch:
+
+jobs:
+  build-rpm:
+    runs-on: ubuntu-latest
+
+    container:
+      image: rockylinux:9
+
+    steps:
+      - name: Install dependencies
+        run: |
+          dnf install -y rpm-build rpmdevtools golang git
+          rpmdev-setuptree
+
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Build Go binary
+        run: |
+          mkdir -p build
+          go build -o build/memdia ./src
+
+      - name: Copy binary to SOURCES
+        run: |
+          cp build/memdia ~/rpmbuild/SOURCES/
+
+      - name: Add SPEC file
+        run: |
+          cat << 'EOF' > ~/rpmbuild/SPECS/memdia.spec
+          Name:           memdia
+          Version:        1.0.0
+          Release:        1%{?dist}
+          Summary:        Mermaid Diagram Creator CLI
+          License:        MIT
+          URL:            https://github.com/${{ github.repository }}
+          BuildArch:      x86_64
+          Source0:        memdia
+
+          %description
+          Mermaid Diagram Creator CLI
+
+          %prep
+
+          %build
+
+          %install
+          mkdir -p %{buildroot}/usr/local/bin
+          install -m 0755 %{SOURCE0} %{buildroot}/usr/local/bin/%{name}
+
+          %files
+          /usr/local/bin/%{name}
+
+          %changelog
+          * $(date "+%a %b %d %Y") GitHub Actions <actions@github.com> - 1.0.0-1
+          - Automated build
+          EOF
+
+      - name: Build RPM
+        run: |
+          rpmbuild -ba ~/rpmbuild/SPECS/memdia.spec
+
+      - name: Upload RPM artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: memdia-rpm
+          path: |
+            ~/rpmbuild/RPMS/x86_64/*.rpm
