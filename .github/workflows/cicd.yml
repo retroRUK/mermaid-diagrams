@@ -79,3 +79,35 @@ jobs:
           name: memdia-rpm
           path: |
             ~/rpmbuild/RPMS/x86_64/*.rpm
+
+            jobs:
+  build-rpm:
+    runs-on: ubuntu-latest
+    container:
+      image: rockylinux:9
+
+    steps:
+      - name: Upload RPM artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: memdia-rpm
+          path: ~/rpmbuild/RPMS/x86_64/*.rpm
+
+  release:
+    needs: build-rpm
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Download RPM artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: memdia-rpm
+          path: dist
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: dist/*.rpm
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+

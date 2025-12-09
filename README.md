@@ -4,4 +4,6 @@ My mermaid diagrams tool is a CLI that allows for creating diagrams.
 
 ## Installation
 
+### Linux
+
 ## Class Diagrams
