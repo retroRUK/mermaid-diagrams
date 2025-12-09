@@ -29,38 +29,22 @@ classDiagram
 		+$ String publicStaticField
 		+! String publicFinalField
 		+$! String PUBLIC_STATIC_FINAL
-		+V int publicVolatileField
-		+T String publicTransientField
 		+ void publicVoidMethod()
 		+ String publicStringMethod()
 		+ int publicIntMethod(String arg)
 		+ List~String~ publicGenericMethod(Map~String. Integer~ map)
-		+$ void publicStaticVoidMethod()
-		+$ String publicStaticStringMethod(int arg)
-		+$ List~T~ publicStaticGenericMethod(T item)
-		+! void publicFinalMethod()
-		+! String publicFinalStringMethod(String arg)
-		+ void publicSynchronizedMethod()
 	}
 
-	class TestClass2 {
+	class BaseClass {
 		<<class>>
 		+ String publicField
 		+$ String publicStaticField
 		+! String publicFinalField
 		+$! String PUBLIC_STATIC_FINAL
-		+V int publicVolatileField
-		+T String publicTransientField
 		+ void publicVoidMethod()
 		+ String publicStringMethod()
 		+ int publicIntMethod(String arg)
 		+ List~String~ publicGenericMethod(Map~String. Integer~ map)
-		+$ void publicStaticVoidMethod()
-		+$ String publicStaticStringMethod(int arg)
-		+$ List~T~ publicStaticGenericMethod(T item)
-		+! void publicFinalMethod()
-		+! String publicFinalStringMethod(String arg)
-		+ void publicSynchronizedMethod()
 	}
 
 	class InterfaceA {
