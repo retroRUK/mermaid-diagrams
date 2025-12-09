@@ -27,11 +27,13 @@ jobs:
 
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Build Go binary
         run: |
           mkdir -p build
-          go build -o build/memdia ./src
+          go build -buildvcs=false -o build/memdia ./src
 
       - name: Copy binary to SOURCES
         run: |
