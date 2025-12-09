@@ -15,14 +15,13 @@ jobs:
     steps:
       - name: Install dependencies
         run: |
-          dnf install -y rpm-build rpmdevtools git tar wget
+          dnf install -y rpm-build rpmdevtools git tar wget gcc gcc-c++ make automake autoconf libtool
           rpmdev-setuptree
 
-          # Install Go 1.25.4 manually
+          # Install Go 1.25.4
           wget https://go.dev/dl/go1.25.4.linux-amd64.tar.gz
           tar -C /usr/local -xzf go1.25.4.linux-amd64.tar.gz
           ln -sf /usr/local/go/bin/go /usr/bin/go
-
           go version
 
       - name: Checkout
@@ -33,7 +32,7 @@ jobs:
       - name: Build Go binary
         run: |
           mkdir -p build
-          go build -buildvcs=false -o build/memdia ./src
+          CGO_ENABLED=1 go build -buildvcs=false -o build/memdia ./src
 
       - name: Copy binary to SOURCES
         run: |
