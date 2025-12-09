@@ -15,8 +15,15 @@ jobs:
     steps:
       - name: Install dependencies
         run: |
-          dnf install -y rpm-build rpmdevtools golang git
+          dnf install -y rpm-build rpmdevtools git tar wget
           rpmdev-setuptree
+
+          # Install Go 1.25.4 manually
+          wget https://go.dev/dl/go1.25.4.linux-amd64.tar.gz
+          tar -C /usr/local -xzf go1.25.4.linux-amd64.tar.gz
+          ln -sf /usr/local/go/bin/go /usr/bin/go
+
+          go version
 
       - name: Checkout
         uses: actions/checkout@v4
