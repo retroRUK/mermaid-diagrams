@@ -125,11 +125,11 @@ func writeClassDiagram(declarations []models.Declaration, outputFile string) {
 	readme := "```mermaid\nclassDiagram\n"
 	for _, d := range declarations {
 		if d.Extends != "" {
-			readme += fmt.Sprintf("\t%s --|> %s\n", d.Name, d.Extends)
+			readme += fmt.Sprintf("\t%s --|> %s : extends\n", d.Name, d.Extends)
 		}
 
 		for _, i := range d.Implements {
-			readme += fmt.Sprintf("\t%s ..|> %s\n", d.Name, i)
+			readme += fmt.Sprintf("\t%s ..|> %s : implements\n", d.Name, i)
 		}
 
 		readme += fmt.Sprintf("\tclass %s {\n\t\t<<%s>>\n", d.Name, d.Type)

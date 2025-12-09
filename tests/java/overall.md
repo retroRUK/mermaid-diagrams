@@ -1,8 +1,8 @@
 ```mermaid
 classDiagram
-	TestClass --|> BaseClass
-	TestClass ..|> InterfaceA
-	TestClass ..|> InterfaceB
+	TestClass --|> BaseClass : extends
+	TestClass ..|> InterfaceA : implements
+	TestClass ..|> InterfaceB : implements
 	class TestClass {
 		<<class>>
 		+ String publicField
@@ -107,9 +107,9 @@ classDiagram
 		$ void staticInterfaceMethod()
 	}
 
-	TestClass2 --|> BaseClass
-	TestClass2 ..|> InterfaceA
-	TestClass2 ..|> InterfaceB
+	TestClass2 --|> BaseClass : extends
+	TestClass2 ..|> InterfaceA : implements
+	TestClass2 ..|> InterfaceB : implements
 	class TestClass2 {
 		<<class>>
 		+ String publicField

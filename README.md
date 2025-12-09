@@ -20,9 +20,9 @@ Example diagrams will look like this.
 
 ```mermaid
 classDiagram
-	TestClass2 --|> BaseClass
-	TestClass2 ..|> InterfaceA
-	TestClass2 ..|> InterfaceB
+	TestClass2 --|> BaseClass : extends
+	TestClass2 ..|> InterfaceA : implements
+	TestClass2 ..|> InterfaceB : implements
 	class TestClass2 {
 		<<class>>
 		+ String publicField

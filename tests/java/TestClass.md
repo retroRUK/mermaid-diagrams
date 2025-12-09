@@ -1,8 +1,8 @@
 ```mermaid
 classDiagram
-	TestClass --|> BaseClass
-	TestClass ..|> InterfaceA
-	TestClass ..|> InterfaceB
+	TestClass --|> BaseClass : extends
+	TestClass ..|> InterfaceA : implements
+	TestClass ..|> InterfaceB : implements
 	class TestClass {
 		<<class>>
 		+ String publicField
